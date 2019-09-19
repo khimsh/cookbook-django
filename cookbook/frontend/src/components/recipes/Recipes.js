@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getRecipes } from '../../actions/recipes';
+import { getRecipes, deleteRecipe } from '../../actions/recipes';
 
 export class Recipes extends Component {
   static propTypes = {
-    recipes: PropTypes.array.isRequired
+    recipes: PropTypes.array.isRequired,
+    getRecipes: PropTypes.func.isRequired,
+    deleteRecipe: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -17,7 +19,7 @@ export class Recipes extends Component {
       <Fragment>
         <h1>Recipes</h1>
 
-        <div className='table table-stripped'>
+        <table className='table table-striped'>
           <thead>
             <tr>
               <th>ID</th>
@@ -37,12 +39,17 @@ export class Recipes extends Component {
                 <td>{recipe.prep_time}</td>
                 <td>{recipe.difficulty}</td>
                 <td>
-                  <button className='btn btn-danger btn-sm'>Delete</button>
+                  <button
+                    onClick={this.props.deleteRecipe.bind(this, recipe.id)}
+                    className='btn btn-danger btn-sm'
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
-        </div>
+        </table>
       </Fragment>
     );
   }
@@ -54,5 +61,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getRecipes }
+  { getRecipes, deleteRecipe }
 )(Recipes);
