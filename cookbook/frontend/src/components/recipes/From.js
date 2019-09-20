@@ -22,6 +22,12 @@ export class From extends Component {
     const { name, description, prep_time, difficulty } = this.state;
     const recipe = { name, description, prep_time, difficulty };
     this.props.addRecipe(recipe);
+    this.setState({
+      name: '',
+      description: '',
+      prep_time: '',
+      difficulty: ''
+    });
   };
 
   render() {
